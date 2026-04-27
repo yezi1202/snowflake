@@ -17,13 +17,13 @@ jobs:
 
       - name: Deploy SQL
         env:
-           SNOWFLAKE_CONNECTIONS_FC_ACCOUNT: ${{ secrets.ACCOUNT }}
-           SNOWFLAKE_CONNECTIONS_FC_USER: ${{ secrets.USER }}
-           SNOWFLAKE_CONNECTIONS_FC_PASSWORD: ${{ secrets.PASSWORD }}
-           SNOWFLAKE_CONNECTIONS_FC_WAREHOUSE: ${{ secrets.WAREHOUSE }}
-           SNOWFLAKE_CONNECTIONS_FC_DATABASE: ${{ secrets.DATABASE }}
-           SNOWFLAKE_CONNECTIONS_FC_SCHEMA: ${{ secrets.SCHEMA }}
+           SNOWFLAKE_CONNECTIONS_MYCONN_ACCOUNT: ${{ secrets.ACCOUNT }}
+           SNOWFLAKE_CONNECTIONS_MYCONN_USER: ${{ secrets.USER }}
+           SNOWFLAKE_CONNECTIONS_MYCONN_PASSWORD: ${{ secrets.PASSWORD }}
+           SNOWFLAKE_CONNECTIONS_MYCONN_WAREHOUSE: ${{ secrets.WAREHOUSE }}
+           SNOWFLAKE_CONNECTIONS_MYCONN_DATABASE: ${{ secrets.DATABASE }}
+           SNOWFLAKE_CONNECTIONS_MYCONN_SCHEMA: ${{ secrets.SCHEMA }}
         run: |
-          snow connection test --connection fc
-          snow run deploy_all --connection fc
+          snow connection test --connection myconn
+          snow run deploy_all --connection myconn
 
