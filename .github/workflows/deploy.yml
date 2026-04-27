@@ -26,14 +26,15 @@ jobs:
         #   SNOWFLAKE_CONNECTIONS_MYCONN_SCHEMA: ${{ secrets.SCHEMA }}
         #   SNOWFLAKE_CONNECTIONS_MYCONN_ROLE: ${{ secrets.ROLE }}
         run: |
-          snow connection add myconn \
+          snow connection add --connection-name myconn \
             --account "${{ secrets.ACCOUNT }}" \
             --user "${{ secrets.USER }}" \
             --password "${{ secrets.PASSWORD }}" \
             --warehouse "${{ secrets.WAREHOUSE }}" \
             --database "${{ secrets.DATABASE }}" \
             --schema "${{ secrets.SCHEMA }}" \
-            --role "${{ secrets.ROLE }}"
+            --role "${{ secrets.ROLE }}" \
+            --no-interactive
           snow connection list
           # snow connection test --connection myconn
           # snow run deploy_all --connection myconn
