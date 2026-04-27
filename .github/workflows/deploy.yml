@@ -19,11 +19,13 @@ jobs:
           cache: 'pip'
 
       - name: Install Snowflake CLI
-        run: pip install snowflake-cli-labs
+        run: pip install --upgrade snowflake-cli-labs
 
-      - name: Setup connection
+      # ✅ tạo connection 1 lần duy nhất
+      - name: Create connection
         run: |
-          snow connection add --connection-name myconn \
+          snow connection add \
+            --connection-name myconn \
             --account "${{ secrets.ACCOUNT }}" \
             --user "${{ secrets.USER }}" \
             --password "${{ secrets.PASSWORD }}" \
@@ -32,21 +34,14 @@ jobs:
             --schema "${{ secrets.SCHEMA }}" \
             --role "${{ secrets.ROLE }}" \
             --no-interactive
-          snow connection test --connection myconn
-          snow run deploy_all --connection myconn
 
-      - name: Deploy SQL
+      # ✅ debug bắt buộc
+      - name: Debug connection
         run: |
-          snow connection add --connection-name myconn \
-            --account "${{ secrets.ACCOUNT }}" \
-            --user "${{ secrets.USER }}" \
-            --password "${{ secrets.PASSWORD }}" \
-            --warehouse "${{ secrets.WAREHOUSE }}" \
-            --database "${{ secrets.DATABASE }}" \
-            --schema "${{ secrets.SCHEMA }}" \
-            --role "${{ secrets.ROLE }}" \
-            --no-interactive
           snow connection list
           snow connection test --connection myconn
-          snow run deploy_all --connection myconn
 
+      # ✅ deploy
+      - name: Deploy SQL
+        run: |
+          snow run deploy_all --connection myconn
