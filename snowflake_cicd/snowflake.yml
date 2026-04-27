@@ -1,0 +1,5 @@
+definition_version: 1
+
+scripts:
+  - name: deploy_all
+    script: deploy.sql
