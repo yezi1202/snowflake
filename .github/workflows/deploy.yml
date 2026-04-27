@@ -17,6 +17,7 @@ jobs:
 
       - name: Deploy SQL
         env:
+          SNOWFLAKE_DEFAULT_CONNECTION_NAME: myconn
           SNOWFLAKE_CONNECTIONS_MYCONN_ACCOUNT: ${{ secrets.ACCOUNT }}
           SNOWFLAKE_CONNECTIONS_MYCONN_USER: ${{ secrets.USER }}
           SNOWFLAKE_CONNECTIONS_MYCONN_PASSWORD: ${{ secrets.PASSWORD }}
