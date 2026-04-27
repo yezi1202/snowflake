@@ -39,4 +39,4 @@ jobs:
       # ✅ deploy
       - name: Deploy SQL
         run: |
-          snow run deploy_all --connection myconn
+          snow sql -f deploy.sql --connection myconn
