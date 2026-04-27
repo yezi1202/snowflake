@@ -11,20 +11,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          cache: 'pip'
 
       - name: Install Snowflake CLI
         run: pip install snowflake-cli-labs
 
+      - name: Setup connection
+        run: |
+          snow connection add --connection-name myconn \
+            --account "${{ secrets.ACCOUNT }}" \
+            --user "${{ secrets.USER }}" \
+            --password "${{ secrets.PASSWORD }}" \
+            --warehouse "${{ secrets.WAREHOUSE }}" \
+            --database "${{ secrets.DATABASE }}" \
+            --schema "${{ secrets.SCHEMA }}" \
+            --role "${{ secrets.ROLE }}" \
+            --no-interactive
+          snow connection test --connection myconn
+          snow run deploy_all --connection myconn
+
       - name: Deploy SQL
-        # env:
-        #   SNOWFLAKE_DEFAULT_CONNECTION_NAME: myconn
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_ACCOUNT: ${{ secrets.ACCOUNT }}
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_USER: ${{ secrets.USER }}
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_PASSWORD: ${{ secrets.PASSWORD }}
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_WAREHOUSE: ${{ secrets.WAREHOUSE }}
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_DATABASE: ${{ secrets.DATABASE }}
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_SCHEMA: ${{ secrets.SCHEMA }}
-        #   SNOWFLAKE_CONNECTIONS_MYCONN_ROLE: ${{ secrets.ROLE }}
         run: |
           snow connection add --connection-name myconn \
             --account "${{ secrets.ACCOUNT }}" \
