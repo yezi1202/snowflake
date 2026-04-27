@@ -36,6 +36,6 @@ jobs:
             --role "${{ secrets.ROLE }}" \
             --no-interactive
           snow connection list
-          # snow connection test --connection myconn
-          # snow run deploy_all --connection myconn
+          snow connection test --connection myconn
+          snow run deploy_all --connection myconn
 
